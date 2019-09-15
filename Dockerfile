@@ -1,6 +1,6 @@
 # This Dockerfile is used to build an headles vnc image based on Ubuntu
 
-FROM ubuntu:16.04 
+FROM ubuntu:16.04
 
 MAINTAINER Simon Hofmann "simon.hofmann@consol.de"
 ENV REFRESHED_AT 2018-10-29
@@ -37,38 +37,37 @@ ADD ./src/common/install/ $INST_SCRIPTS/
 ADD ./src/ubuntu/install/ $INST_SCRIPTS/
 RUN find $INST_SCRIPTS -name '*.sh' -exec chmod a+x {} +
 
+RUN $INST_SCRIPTS/maplab.sh
+RUN $INST_SCRIPTS/maplab_additions.sh
+RUN $INST_SCRIPTS/vs_code_install.sh
+RUN $INST_SCRIPTS/oh-my-zsh.sh
+RUN $INST_SCRIPTS/ssh.sh
+ENV SSH_PORT=22
+EXPOSE $SSH_PORT
+
 ### Install some common tools
 RUN $INST_SCRIPTS/tools.sh
 ENV LANG='en_US.UTF-8' LANGUAGE='en_US:en' LC_ALL='en_US.UTF-8'
 
 ### Install custom fonts
-RUN $INST_SCRIPTS/install_custom_fonts.sh
+# RUN $INST_SCRIPTS/install_custom_fonts.sh
 
 ### Install xvnc-server & noVNC - HTML5 based VNC viewer
 RUN $INST_SCRIPTS/tigervnc.sh
 RUN $INST_SCRIPTS/no_vnc.sh
 
 ### Install firefox and chrome browser
-RUN $INST_SCRIPTS/firefox.sh
+# RUN $INST_SCRIPTS/firefox.sh
 RUN $INST_SCRIPTS/chrome.sh
 
 ### Install xfce UI
 RUN $INST_SCRIPTS/xfce_ui.sh
 ADD ./src/common/xfce/ $HOME/
 
-RUN $INST_SCRIPTS/oh-my-zsh.sh
-RUN $INST_SCRIPTS/ssh.sh
-ENV SSH_PORT=22
-EXPOSE $SSH_PORT
-RUN $INST_SCRIPTS/maplab.sh
-RUN $INST_SCRIPTS/maplab_additions.sh
-
 ### configure startup
 RUN $INST_SCRIPTS/libnss_wrapper.sh
 ADD ./src/common/scripts $STARTUPDIR
 RUN $INST_SCRIPTS/set_user_permission.sh $STARTUPDIR $HOME
-
-USER 1000
 
 ENTRYPOINT ["/dockerstartup/vnc_startup.sh"]
 CMD ["--wait"]
