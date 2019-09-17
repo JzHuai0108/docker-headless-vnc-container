@@ -9,14 +9,14 @@ then export USE_PROC=1 ;
 else export USE_PROC=$(($(nproc)/2)) ; 
 fi
 export UBUNTU_VERSION=xenial
-export ROS_DISTRO=kinetic
+export ROS_VERSION=kinetic
 # NOTE: Follow the official ROS installation instructions for melodic.
-apt update
-apt install software-properties-common
+apt-get update -y
+DEBIAN_FRONTEND=noninteractive apt-get install -y software-properties-common wget
 add-apt-repository "deb http://packages.ros.org/ros/ubuntu $UBUNTU_VERSION main"
-wget https://raw.githubusercontent.com/ros/rosdistro/master/ros.key -O - | sudo apt-key add -
-apt update
-apt install ros-$ROS_VERSION-desktop-full "ros-$ROS_VERSION-tf2-*" "ros-$ROS_VERSION-camera-info-manager*" --yes
+wget https://raw.githubusercontent.com/ros/rosdistro/master/ros.key -O - | apt-key add -
+apt-get update
+apt-get install ros-$ROS_VERSION-desktop-full "ros-$ROS_VERSION-tf2-*" "ros-$ROS_VERSION-camera-info-manager*" --yes
 
 apt-get install -y \
     autotools-dev \
@@ -38,11 +38,12 @@ apt-get install -y \
     python-git \
     python-setuptools \
     python-termcolor \
-    python-wstool \
-    libatlas3-base
+    python-wstool
 
+pip2 install --upgrade pip
 pip2 install requests
 
-apt-get clean -y
-rm -rf /tmp/* /var/tmp/*
-rm -rf /var/lib/apt/lists/*
+# Update ROS environment
+rosdep init
+rosdep update
+echo ". /opt/ros/$ROS_VERSION/setup.bash" >> ~/.bashrc

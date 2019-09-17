@@ -1,0 +1,22 @@
+FROM ubuntu:16.04
+
+# Install ROS 
+
+#(Ubuntu 16.04: xenial, Ubuntu 14.04: trusty, Ubuntu 18.04: bionic)
+ENV UBUNTU_VERSION=xenial
+
+#(Ubuntu 16.04: kinetic, Ubuntu 14.04: indigo, Ubuntu 18.04: melodic)
+ENV ROS_VERSION=kinetic
+
+# NOTE: Follow the official ROS installation instructions for melodic.
+RUN apt-get update -y
+RUN DEBIAN_FRONTEND=noninteractive apt-get install -y software-properties-common wget
+RUN add-apt-repository "deb http://packages.ros.org/ros/ubuntu $UBUNTU_VERSION main"
+RUN wget https://raw.githubusercontent.com/ros/rosdistro/master/ros.key -O - | apt-key add -
+RUN apt-get update
+RUN apt-get install ros-$ROS_VERSION-desktop-full "ros-$ROS_VERSION-tf2-*" "ros-$ROS_VERSION-camera-info-manager*" --yes
+
+# Update ROS environment
+RUN rosdep init
+RUN rosdep update
+RUN echo ". /opt/ros/$ROS_VERSION/setup.bash" >> ~/.bashrc

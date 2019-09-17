@@ -23,7 +23,7 @@ apt-get install -y \
 pip3 install --upgrade pip
 pip2 install --upgrade pip
 pip2 install PyPDF2
-pip3 install PyPDF2
+# pip3 install PyPDF2
 # pip2 install -U pytest
 # pip3 install -U pytest
 
