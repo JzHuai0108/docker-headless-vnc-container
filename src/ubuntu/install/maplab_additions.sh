@@ -10,6 +10,7 @@ apt-get install -y \
     python3-tk \
     python3-matplotlib \
     python3-pip \
+    python-scipy \
     ros-${ROS_DISTRO}-cv-bridge \
     ros-${ROS_DISTRO}-image-transport \
     ros-${ROS_DISTRO}-message-filters \

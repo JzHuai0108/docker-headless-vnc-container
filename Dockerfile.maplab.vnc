@@ -70,6 +70,8 @@ RUN $INST_SCRIPTS/libnss_wrapper.sh
 ADD ./src/common/scripts $STARTUPDIR
 RUN $INST_SCRIPTS/set_user_permission.sh $STARTUPDIR $HOME
 
+RUN rosdep init
+RUN rosdep update
 RUN echo ". /opt/ros/$ROS_VERSION/setup.bash" >> ~/.bashrc
 
 ENTRYPOINT ["/dockerstartup/vnc_startup.sh"]
