@@ -10,3 +10,5 @@ rm -f Dockerfile
 cp Dockerfile.maplab.vnc Dockerfile
 CMD="docker build -t ros:maplab_vnc ."
 source retry.sh
+
+rm -f Dockerfile
