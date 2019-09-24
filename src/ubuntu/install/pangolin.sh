@@ -5,6 +5,7 @@ set -e
 mkdir /tmp/pangolin
 cd /tmp/pangolin
 
+apt-get update
 apt install -y libglew-dev
 
 git clone https://github.com/stevenlovegrove/Pangolin.git

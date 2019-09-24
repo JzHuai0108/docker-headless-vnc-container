@@ -37,6 +37,7 @@ ADD ./src/common/install/ $INST_SCRIPTS/
 ADD ./src/ubuntu/install/ $INST_SCRIPTS/
 RUN find $INST_SCRIPTS -name '*.sh' -exec chmod a+x {} +
 
+RUN $INST_SCRIPTS/gtest.sh
 RUN $INST_SCRIPTS/maplab_from_ros.sh
 RUN $INST_SCRIPTS/maplab_additions.sh
 RUN $INST_SCRIPTS/oh-my-zsh.sh

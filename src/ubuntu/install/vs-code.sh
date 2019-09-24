@@ -10,5 +10,5 @@ sh -c 'echo "deb [arch=amd64 signed-by=/usr/share/keyrings/packages.microsoft.gp
 
 apt-get install apt-transport-https
 apt-get update
-apt-get install code # or code-insiders
+apt-get install -y code # or code-insiders
 
