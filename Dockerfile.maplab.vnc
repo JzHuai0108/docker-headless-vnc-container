@@ -1,12 +1,10 @@
 # This Dockerfile is used to build an headles vnc image based on Ubuntu
 
 FROM ros:kinetic
+ENV ROS_VERSION=kinetic
 
-MAINTAINER Simon Hofmann "simon.hofmann@consol.de"
-ENV REFRESHED_AT 2018-10-29
-
-LABEL io.k8s.description="Headless VNC Container with Xfce window manager, firefox and chromium" \
-      io.k8s.display-name="Headless VNC Container based on Ubuntu" \
+LABEL io.k8s.description="Root VNC Container with Xfce window manager, firefox and chromium" \
+      io.k8s.display-name="Root VNC Container based on ROS Kinetic" \
       io.openshift.expose-services="6901:http,5901:xvnc" \
       io.openshift.tags="vnc, ubuntu, xfce" \
       io.openshift.non-scalable=true
@@ -20,11 +18,11 @@ ENV DISPLAY=:1 \
 EXPOSE $VNC_PORT $NO_VNC_PORT
 
 ### Envrionment config
-ENV HOME=/headless \
+ENV HOME=/root \
     TERM=xterm \
     STARTUPDIR=/dockerstartup \
-    INST_SCRIPTS=/headless/install \
-    NO_VNC_HOME=/headless/noVNC \
+    INST_SCRIPTS=/root/install \
+    NO_VNC_HOME=/root/noVNC \
     DEBIAN_FRONTEND=noninteractive \
     VNC_COL_DEPTH=24 \
     VNC_RESOLUTION=1280x1024 \
@@ -37,19 +35,21 @@ ADD ./src/common/install/ $INST_SCRIPTS/
 ADD ./src/ubuntu/install/ $INST_SCRIPTS/
 RUN find $INST_SCRIPTS -name '*.sh' -exec chmod a+x {} +
 
+### Install some common tools
+RUN $INST_SCRIPTS/tools.sh
+ENV LANG='en_US.UTF-8' LANGUAGE='en_US:en' LC_ALL='en_US.UTF-8'
+
 RUN $INST_SCRIPTS/gtest.sh
 RUN $INST_SCRIPTS/maplab_from_ros.sh
 RUN $INST_SCRIPTS/maplab_additions.sh
-RUN $INST_SCRIPTS/oh-my-zsh.sh
 RUN $INST_SCRIPTS/ssh.sh
 ENV SSH_PORT=22
 EXPOSE $SSH_PORT
 RUN $INST_SCRIPTS/pangolin.sh
 RUN $INST_SCRIPTS/vs-code.sh
 
-### Install some common tools
-RUN $INST_SCRIPTS/tools.sh
-ENV LANG='en_US.UTF-8' LANGUAGE='en_US:en' LC_ALL='en_US.UTF-8'
+RUN $INST_SCRIPTS/oh-my-zsh.sh
+RUN echo "\nsource /opt/ros/$ROS_VERSION/setup.zsh" >> ~/.zshrc
 
 ### Install custom fonts
 # RUN $INST_SCRIPTS/install_custom_fonts.sh
@@ -71,8 +71,6 @@ RUN $INST_SCRIPTS/libnss_wrapper.sh
 ADD ./src/common/scripts $STARTUPDIR
 RUN $INST_SCRIPTS/set_user_permission.sh $STARTUPDIR $HOME
 
-RUN rosdep update
-RUN echo "source /opt/ros/$ROS_VERSION/setup.zsh" >> ~/.zshrc
 
 ENTRYPOINT ["/dockerstartup/vnc_startup.sh"]
 CMD ["--wait"]
