@@ -49,7 +49,6 @@ RUN $INST_SCRIPTS/pangolin.sh
 RUN $INST_SCRIPTS/vs-code.sh
 
 RUN $INST_SCRIPTS/oh-my-zsh.sh
-RUN echo "\nsource /opt/ros/$ROS_VERSION/setup.zsh" >> ~/.zshrc
 
 ### Install custom fonts
 # RUN $INST_SCRIPTS/install_custom_fonts.sh

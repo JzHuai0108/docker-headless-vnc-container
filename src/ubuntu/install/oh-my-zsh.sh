@@ -8,6 +8,12 @@ echo "Install oh-my-zsh"
 # https://kifarunix.com/how-to-install-and-setup-zsh-and-oh-my-zsh-on-ubuntu-18-04/
 apt-get update
 apt-get install -y zsh
-wget https://github.com/robbyrussell/oh-my-zsh/raw/master/tools/install.sh -O - | zsh || true
+mkdir -p /tmp/oh-my-zsh
+cd /tmp/oh-my-zsh
+wget https://github.com/robbyrussell/oh-my-zsh/raw/master/tools/install.sh
+zsh install.sh -y
 chsh -s $(which zsh)
+
+echo "\nsource /opt/ros/$ROS_VERSION/setup.zsh" >> ~/.zshrc
+rm -rf /tmp/oh-my-zsh
 apt-get clean -y
