@@ -39,6 +39,8 @@ RUN find $INST_SCRIPTS -name '*.sh' -exec chmod a+x {} +
 RUN $INST_SCRIPTS/tools.sh
 ENV LANG='en_US.UTF-8' LANGUAGE='en_US:en' LC_ALL='en_US.UTF-8'
 
+RUN $INST_SCRIPTS/oh-my-zsh.sh
+RUN $INST_SCRIPTS/qtcreator.sh
 RUN $INST_SCRIPTS/gtest.sh
 RUN $INST_SCRIPTS/maplab_from_ros.sh
 RUN $INST_SCRIPTS/maplab_additions.sh
@@ -47,8 +49,6 @@ ENV SSH_PORT=22
 EXPOSE $SSH_PORT
 RUN $INST_SCRIPTS/pangolin.sh
 RUN $INST_SCRIPTS/vs-code.sh
-
-RUN $INST_SCRIPTS/oh-my-zsh.sh
 
 ### Install custom fonts
 # RUN $INST_SCRIPTS/install_custom_fonts.sh
