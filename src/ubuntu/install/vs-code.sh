@@ -12,3 +12,5 @@ apt-get install apt-transport-https
 apt-get update
 apt-get install -y code # or code-insiders
 
+# You need to start vscode as a superuser with the user-data-dir arg to suppress a warning.
+# code --user-data-dir="~/.vscode"
