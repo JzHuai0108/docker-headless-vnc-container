@@ -2,34 +2,23 @@
 ### every exit != 0 fails the script
 set -e
 
-# https://www.eriksmistad.no/getting-started-with-google-test-on-ubuntu/
+# The below procedure is tested on Ubuntu 18.
 apt-get update
-apt-get install -y libgtest-dev cmake
+apt-get install -y googletest cmake
 
-cd /usr/src/gtest
-cmake CMakeLists.txt
+cd /usr/src/googletest
+mkdir build
+cd build
+cmake .. -DBUILD_GMOCK=ON -DBUILD_GTEST=ON
 make
 
-# copy or symlink libgtest.a and libgtest_main.a to your /usr/lib folder
+# copy libgtest.a  libgtest_main.a
+cd /usr/src/googletest/build/googlemock/gtest
 cp *.a /usr/lib
-rm -rf CMakeFiles \
- libgtest_main.a \
- libgtest.a \
- cmake_install.cmake \
- Makefile \
- CMakeCache.txt
-
-cd /usr/src/gmock
-cmake CMakeLists.txt
-make
-
-# copy or symlink libgtest.a and libgtest_main.a to your /usr/lib folder
+# copy libgmock.a  libgmock_main.a
+cd /usr/src/googletest/build/googlemock
 cp *.a /usr/lib
-rm -rf CMakeFiles \
- gtest \
- libgmock.a \
- libgmock_main.a \
- cmake_install.cmake \
- Makefile \
- CMakeCache.txt
+
+cd /usr/src/googletest
+rm -rf ./build
 
