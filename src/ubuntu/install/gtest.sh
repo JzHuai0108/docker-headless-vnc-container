@@ -6,19 +6,20 @@ set -e
 apt-get update
 apt-get install -y googletest cmake
 
-cd /usr/src/googletest
-mkdir build
-cd build
-cmake .. -DBUILD_GMOCK=ON -DBUILD_GTEST=ON
-make
+# Manually installing gtest and gmock is a bad practice.
+# cd /usr/src/googletest
+# mkdir build
+# cd build
+# cmake .. -DBUILD_GMOCK=ON -DBUILD_GTEST=ON
+# make
 
-# copy libgtest.a  libgtest_main.a
-cd /usr/src/googletest/build/googlemock/gtest
-cp *.a /usr/lib
-# copy libgmock.a  libgmock_main.a
-cd /usr/src/googletest/build/googlemock
-cp *.a /usr/lib
+# # copy libgtest.a  libgtest_main.a
+# cd /usr/src/googletest/build/googlemock/gtest
+# cp *.a /usr/lib
+# # copy libgmock.a  libgmock_main.a
+# cd /usr/src/googletest/build/googlemock
+# cp *.a /usr/lib
 
-cd /usr/src/googletest
-rm -rf ./build
+# cd /usr/src/googletest
+# rm -rf ./build
 
