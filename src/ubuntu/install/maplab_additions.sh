@@ -19,17 +19,20 @@ apt-get install -y \
     ros-${ROS_DISTRO}-node-manager-fkie \
     libeigen3-dev \
     libsuitesparse-dev \
-    cmake
+    libv4l-dev
 
-# to fix " *** No rule to make target '/opt/ros/kinetic/lib/liborocos-kdl.so.1.3.2', 
+# libv4l is required by ethz asl kalibr.
+
+# To fix " *** No rule to make target '/opt/ros/kinetic/lib/liborocos-kdl.so.1.3.2', 
 # needed by '/maplab_ws/devel/lib/libsimulation.so'.  Stop."
 ln -s /opt/ros/kinetic/lib/liborocos-kdl.so.1.3 /opt/ros/kinetic/lib/liborocos-kdl.so.1.3.2
 
-pip3 install --upgrade pip
 pip2 install --upgrade pip
 pip2 install PyPDF2
-# pip3 install PyPDF2
 # pip2 install -U pytest
+
+pip3 install --upgrade pip
+# pip3 install PyPDF2
 # pip3 install -U pytest
 
 apt-get clean -y

@@ -4,6 +4,7 @@ set -e
 
 echo "Install tools for maplab installation"
 
+apt-get update
 apt-get install -y \
     autotools-dev \
     ccache \
