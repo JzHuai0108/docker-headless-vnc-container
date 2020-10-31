@@ -21,6 +21,10 @@ apt-get install -y \
     libsuitesparse-dev \
     cmake
 
+# to fix " *** No rule to make target '/opt/ros/kinetic/lib/liborocos-kdl.so.1.3.2', 
+# needed by '/maplab_ws/devel/lib/libsimulation.so'.  Stop."
+ln -s /opt/ros/kinetic/lib/liborocos-kdl.so.1.3 /opt/ros/kinetic/lib/liborocos-kdl.so.1.3.2
+
 pip3 install --upgrade pip
 pip2 install --upgrade pip
 pip2 install PyPDF2
