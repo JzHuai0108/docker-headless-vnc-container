@@ -27,5 +27,16 @@ apt-get install -y \
     python-termcolor \
     python-wstool
 
+# https://stackoverflow.com/questions/37495375/python-pip-install-throws-typeerror-unsupported-operand-types-for-retry
+apt-get remove -y python-pip python3-pip
+mkdir -p /tmp/get-pip
+cd /tmp/get-pip
+wget https://bootstrap.pypa.io/get-pip.py
+python get-pip.py
+python3 get-pip.py
+
+pip3 install --upgrade pip
+
 pip2 install --upgrade pip
 pip2 install requests
+

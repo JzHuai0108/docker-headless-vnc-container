@@ -2,6 +2,12 @@
 ### every exit != 0 fails the script
 set -e
 
+pip2 install pypdf2
+# pip2 install -U pytest
+
+# pip3 install PyPDF2
+# pip3 install -U pytest
+
 echo "Install additional tools for development"
 export ROS_DISTRO=kinetic
 apt-get update
@@ -23,17 +29,10 @@ apt-get install -y \
 
 # libv4l is required by ethz asl kalibr.
 
-# To fix " *** No rule to make target '/opt/ros/kinetic/lib/liborocos-kdl.so.1.3.2', 
+# To fix " *** No rule to make target '/opt/ros/kinetic/lib/liborocos-kdl.so.1.3.X', 
 # needed by '/maplab_ws/devel/lib/libsimulation.so'.  Stop."
-ln -s /opt/ros/kinetic/lib/liborocos-kdl.so.1.3 /opt/ros/kinetic/lib/liborocos-kdl.so.1.3.2
+ln -s -f /opt/ros/kinetic/lib/liborocos-kdl.so.1.3 /opt/ros/kinetic/lib/liborocos-kdl.so.1.3.0
 
-pip2 install --upgrade pip
-pip2 install PyPDF2
-# pip2 install -U pytest
-
-pip3 install --upgrade pip
-# pip3 install PyPDF2
-# pip3 install -U pytest
 
 apt-get clean -y
 rm -rf /tmp/* /var/tmp/*

@@ -10,8 +10,8 @@ apt-get update
 apt-get install -y zsh
 mkdir -p /tmp/oh-my-zsh
 cd /tmp/oh-my-zsh
-wget https://github.com/robbyrussell/oh-my-zsh/raw/master/tools/install.sh
-zsh install.sh -y
+git clone --recursive https://github.com/ohmyzsh/ohmyzsh.git
+zsh ./ohmyzsh/tools/install.sh -y
 chsh -s $(which zsh)
 
 echo "\nsource /opt/ros/$ROS_VERSION/setup.zsh" >> ~/.zshrc
