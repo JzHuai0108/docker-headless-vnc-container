@@ -24,10 +24,7 @@ apt-get install -y \
     ros-${ROS_DISTRO}-tf-conversions \
     ros-${ROS_DISTRO}-node-manager-fkie \
     libeigen3-dev \
-    libsuitesparse-dev \
-    libv4l-dev
-
-# libv4l is required by ethz asl kalibr.
+    libsuitesparse-dev
 
 # To fix " *** No rule to make target '/opt/ros/kinetic/lib/liborocos-kdl.so.1.3.X', 
 # needed by '/maplab_ws/devel/lib/libsimulation.so'.  Stop."
